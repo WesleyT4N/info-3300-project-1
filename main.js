@@ -6,40 +6,34 @@ function showVis1() {
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 600 290");
 
-  var projection = d3.geoNaturalEarth1();
-  var pathGenerator = d3.geoPath().projection(projection);
+  var projection = d3.geoEquirectangular();
+  var pathGenerator;
   
   var countries;
   var hostData;
   var rawCountryData;
-  var top5;
+  var USRusData;
  
   var visitorExtent;
   var visitorScale;
 
-  var top5Colors = {
+  var USRusColors = {
     "United States": 
       { 
         lines: "#2b7ef2",
         country: "#275084"
       },
-    // "Ireland": "#8bff5e",
-    // "Netherlands": "#e8a5ff",
     "Russian Federation": 
       {
         lines: "#ff6060",
         country: "#592929",
       }
-    // "United Kingdom": "#ffff75"
   };
 
   // Had to manually look these up on wikipedia as the dataset for the internet data did not provide them
-  var top5CountryCodes = {
+  var USRusCountryCodes = {
     "840": "United States",
-    // "372": "Ireland",
-    // "528": "Netherlands",
     "643": "Russian Federation",
-    // "826": "United Kingdom" 
   };
 
   function showMap() {
@@ -54,12 +48,13 @@ function showVis1() {
     paths.attr("d", function (country) {
       return pathGenerator(country);
     }).style("fill", function(d) {
-      var results = top5CountryCodes[d.id];
+      var results = USRusCountryCodes[d.id];
       if (results) {
-        return top5Colors[results].country;
+        return USRusColors[results].country;
       }
       return "#223144";
-    }).style("stroke", "#111a25");
+    }).style("stroke", "#111a25")
+    .style("stroke-width", 0.5);
     
     // console.log(countries);
     // display the points for each hosting location
@@ -79,7 +74,7 @@ function showVis1() {
         return projection(point)[1];
       })
       .style("fill", function (d) {
-        var result = top5.find(function (e) {
+        var result = USRusData.find(function (e) {
           return e.key === d.key;
         });
         // console.log(result);
@@ -97,7 +92,7 @@ function showVis1() {
   // Credits to vigorousnorth at for the curved connections between points 
   // https://gist.github.com/vigorousnorth/e95a867b10de1239ab3a
   function drawArrows(){
-    top5.forEach(function (hostCountry) {
+    USRusData.forEach(function (hostCountry) {
       // console.log(hostCountry);
       var origin = projection([hostCountry.data.coordinates.longitude,      
         hostCountry.data.coordinates.latitude]);
@@ -107,7 +102,7 @@ function showVis1() {
         // console.log(destinations[dest]);
           worldMapSvg.append("path")
           .attr("class", "arrow")
-          .style("stroke", top5Colors[hostCountry.key].lines)
+          .style("stroke", USRusColors[hostCountry.key].lines)
           .style("stroke-width", 0.5)
           .style("fill", "none")
           .style("opacity", function () {
@@ -117,8 +112,7 @@ function showVis1() {
             return visitorScale(destinations[dest].daily_vis);
           })
           .attr("d", function () {
-  
-            var point = projection([destinations[dest].longitude, destinations[dest].latitude]);
+            var point = projection([destinations[dest].longitude, destinations  [dest].latitude]);
             var mid = [(origin[0] + point[0]) / 2, (origin[1] + point[1]) / 2]
             var curveoffset = 20,
                 midcurve = [mid[0]+curveoffset, mid[1]-curveoffset];
@@ -145,7 +139,7 @@ function showVis1() {
       .attr("y", 245)
       .attr("width", 600)
       .attr("height", 45)
-      .style("opacity", ".5");
+      .style("opacity", ".75");
     
       mapHeader
       .append("text")
@@ -157,10 +151,11 @@ function showVis1() {
       .style("font-size", "2rem")
       .style("fill", "#fff");
 
+      // Setupt 
       var headerText = d3.select("#headerText");
-      headerText.append("tspan").text(" USA").style("fill", top5Colors["United States"].lines);
+      headerText.append("tspan").text(" USA").style("fill", USRusColors["United States"].lines).style("font-weight", 700);
       headerText.append("tspan").text(" vs");
-      headerText.append("tspan").text(" Russia").style("fill", top5Colors["Russian Federation"].lines);
+      headerText.append("tspan").text(" Russia").style("fill", USRusColors["Russian Federation"].lines).style("font-weight", 700);
   }
 
   function drawLegend() {
@@ -174,38 +169,112 @@ function showVis1() {
       .attr("height", 20)
       .style("fill" ,"black")
       .style("opacity", "0.3");
+
     legend.append("line")
       .attr("x1", 10)
       .attr("x2", 30)
       .attr("y1", 236)
       .attr("y2", 236)
-      .style("stroke", top5Colors["United States"].lines)
+      .style("stroke", USRusColors["United States"].lines)
       .style("stroke-width", 2);
     legend.append("text")
       .text("Reach of US-hosted sites")
       .attr("x", 35)
       .attr("y", 238)
-      .style("font-size", "8px")
+      .style("font-size", "6px")
       .style("fill", "#fff");
+
     legend.append("line")
-      .attr("x1", 130)
-      .attr("x2", 150)
+      .attr("x1", 110)
+      .attr("x2", 130)
       .attr("y1", 236)
       .attr("y2", 236)
-      .style("stroke", top5Colors["Russian Federation"].lines)
+      .style("stroke", USRusColors["Russian Federation"].lines)
       .style("stroke-width", 2);
     legend.append("text")
       .text("Reach of Russian-hosted sites")
-      .attr("x", 155)
+      .attr("x", 135)
       .attr("y", 238)
-      .style("font-size", "8px")
+      .style("font-size", "6px")
       .style("fill", "#fff");
+
     legend.append("text")
-      .text("Opacity = # of average daily users of US / RU sites from that country")
-      .attr("x", 350)
+      .text("Line Opacity = # of average daily users of US / RU sites from that country")
+      .attr("x", 400)
       .attr("y", 238)
-      .style("font-size", "8px")
+      .style("font-size", "6px")
       .style("fill", "#fff");
+    legend.append("circle")
+      .attr("r", 1)
+      .attr("cx", 225)
+      .attr("cy", 236)
+      .style("fill", "#8abfff");
+    legend.append("text")
+      .text("Capitals of other major web-hosting countries")
+      .attr("x", 230)
+      .attr("y", 238)
+      .style("font-size", "6px")
+      .style("fill", "#fff");;
+  }
+
+  function drawFeatures() {
+    worldMapSvg.append("g").attr("id", "mapFeatures");
+
+    var features = d3.select("#mapFeatures");
+    features.append("rect")
+      .attr("x", 50)
+      .attr("y", 50)
+      .attr("width", 120)
+      .attr("height", 25)
+      .style("fill", "black")
+      .style("opacity", 0.5);
+    features.append("rect")
+      .attr("x", 370)
+      .attr("y", 15)
+      .attr("width", 120)
+      .attr("height", 25)
+      .style("fill", "black")
+      .style("opacity", 0.5);
+
+    features.append("text")
+      .attr("id", "usLabel")
+      .attr("x", 55)
+      .attr("y", 58)
+      .style("fill", "#fff")
+      .style("font-size", "6px");
+    features.append("text")
+      .attr("id", "ruLabel")
+      .attr("x", 375)
+      .attr("y", 23)
+      .style("fill", "#fff")
+      .style("font-size", "6px");
+
+
+    
+    var usLabel = d3.select("#usLabel");
+    usLabel.append("tspan")
+      .text("Total Avg Daily Visitors of USA-based sites:");
+      console.log(USRusData);
+    usLabel.append("tspan")
+      .text(USRusData[0].data.total_vis.toLocaleString('en'))
+      .attr("text-anchor", "middle")
+      .attr("x", 110)
+      .attr("dy", "13px")
+      .style("font-size", "12px")
+      .style("fill", USRusColors["United States"].lines)
+      .style("font-weight", 700);
+
+    var ruLabel = d3.select("#ruLabel");
+    ruLabel.append("tspan")
+      .text("Total Avg Daily Visitors of RUS-based sites:");
+    ruLabel.append("tspan")
+      .text(USRusData[1].data.total_vis.toLocaleString('en'))
+      .attr("text-anchor", "middle")
+      .attr("x", 430)
+      .attr("dy", "13px")
+      .style("font-size", "10px")
+      .style("fill", USRusColors["Russian Federation"].lines)
+      .style("font-weight", 700);
   }
 
   function callback(error, data, topo) {
@@ -216,20 +285,20 @@ function showVis1() {
       return { key, data : hostData[key]};
     });
 
-    top5 = hostData;
-    top5.sort(function (a,b) {
+    USRusData = hostData;
+    USRusData.sort(function (a,b) {
       return b.data.total_vis - a.data.total_vis;
     });
-    top5 = [top5[0], top5[3]];
-    console.log(top5);
+    USRusData = [USRusData[0], USRusData[3]];
+    console.log(USRusData);
     
-    var USDests = top5[0].data.destination;
+    var USDests = USRusData[0].data.destination;
     var USDailyVisitors = Object.keys(USDests)
       .map(function (k) {
         return USDests[k].daily_vis;
       });
 
-    var RUDests = top5[1].data.destination;
+    var RUDests = USRusData[1].data.destination;
     var RUDailyVisitors = Object.keys(RUDests)
       .map(function (k) {
         return RUDests[k].daily_vis;
@@ -241,13 +310,14 @@ function showVis1() {
     var combinedDailyVisitors = USDailyVisitors.concat(RUDailyVisitors);
 
     visitorExtent = d3.extent(combinedDailyVisitors);
-    visitorScale = d3.scaleLog().domain(visitorExtent).range([.3, .6]);
+    visitorScale = d3.scaleLog().domain(visitorExtent).range([.1, .5]);
     console.log(visitorExtent);
     // console.log(hostData);
     countries = topojson.feature(topo, topo.objects.countries);
     showMap();
     drawHeader();
     drawLegend();
+    drawFeatures();
   }
 
 
@@ -255,9 +325,6 @@ function showVis1() {
   .defer(d3.json, "/map_figure_data_with_coord.json")
   .defer(d3.json, "/world-50m.json")
   .await(callback);
-
-  
-
 }
 
 
