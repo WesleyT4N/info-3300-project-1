@@ -1,0 +1,46 @@
+{
+   "United States": [
+      {
+         "Website": "Google",
+         "Avg_Daily_Visitors": 518108189
+      },
+      {
+         "Website": "Youtube",
+         "Avg_Daily_Visitors": 506457282
+      },
+      {
+         "Website": "Wikipedia",
+         "Avg_Daily_Visitors": 118921355
+      },
+      {
+         "Website": "Yahoo!",
+         "Avg_Daily_Visitors": 99572035
+      },
+      {
+         "Website": "QQ",
+         "Avg_Daily_Visitors": 79499959
+      }
+   ],
+   "Russian Federation": [
+      {
+         "Website": "VK",
+         "Avg_Daily_Visitors": 48174081
+      },
+      {
+         "Website": "Yandex",
+         "Avg_Daily_Visitors": 29110541
+      },
+      {
+         "Website": "Ok",
+         "Avg_Daily_Visitors": 21572093
+      },
+      {
+         "Website": "Mail",
+         "Avg_Daily_Visitors": 19840538
+      },
+      {
+         "Website": "Rambler",
+         "Avg_Daily_Visitors": 5082480
+      }
+   ]
+}
