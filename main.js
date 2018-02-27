@@ -22,14 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
   .attr("viewBox", "0 0 400 200");
 
 
-  //Read in words figure csv file.
+  //Read in words figure JSON file.
   //http://learnjsdata.com/read_data.html
-  d3.csv("/words_figure_data.csv", function(data) {
-    data.forEach(function(d) {
-      d.Avg_Daily_Visitors = +d.Avg_Daily_Visitors; //read this value as number, not string
-    });
+  d3.json("/words_figure_data.json", function(error, data) {
     console.log(data);
-    return data;
   });
 
 
