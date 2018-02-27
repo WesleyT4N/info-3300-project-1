@@ -233,37 +233,51 @@ function showVis1() {
     // Backgrounds
     features.append("rect")
       .attr("x", 50)
-      .attr("y", 60)
+      .attr("y", 35)
       .attr("width", 120)
-      .attr("height", 25)
+      .attr("height", 50)
       .style("fill", "black")
       .style("opacity", 0.5);
+
     features.append("rect")
-      .attr("x", 370)
-      .attr("y", 25)
+      .attr("x", 365)
+      .attr("y", 5)
       .attr("width", 120)
-      .attr("height", 25)
+      .attr("height", 50)
       .style("fill", "black")
       .style("opacity", 0.5);
 
     features.append("text")
-      .attr("id", "usLabel")
+      .attr("id", "usLabel1")
       .attr("x", 55)
       .attr("y", 68)
       .style("fill", "#fff")
       .style("font-size", "6px");
     features.append("text")
-      .attr("id", "ruLabel")
-      .attr("x", 375)
-      .attr("y", 33)
+      .attr("id", "usLabel2")
+      .attr("text-anchor", "middle")
+      .attr("x", 110)
+      .attr("y", 43)
+      .style("fill", "#fff")
+      .style("font-size", "6px");
+    features.append("text")
+      .attr("id", "ruLabel1")
+      .attr("x", 370)
+      .attr("y", 38)
+      .style("fill", "#fff")
+      .style("font-size", "6px");
+    features.append("text")
+      .attr("id", "ruLabel2")
+      .attr("x", 373)
+      .attr("y", 13)
       .style("fill", "#fff")
       .style("font-size", "6px");
 
-    var usLabel = d3.select("#usLabel");
-    usLabel.append("tspan")
+    var usLabel1 = d3.select("#usLabel1");
+    usLabel1.append("tspan")
       .text("Total Avg Daily Visitors of USA-based sites:");
-      console.log(USRusData);
-    usLabel.append("tspan")
+
+    usLabel1.append("tspan")
       .text(USRusData[0].data.total_vis.toLocaleString('en'))
       .attr("text-anchor", "middle")
       .attr("x", 110)
@@ -271,14 +285,38 @@ function showVis1() {
       .style("font-size", "12px")
       .style("fill", USRusColors["United States"].lines)
       .style("font-weight", 700);
+    
+    var usLabel2 = d3.select("#usLabel2");
+    usLabel2.append("tspan")
+      .text("Number of Countries That Use USA Sites:");
+    usLabel2.append("tspan")
+      .text(Object.keys(USRusData[0].data.destination).length)
+      .attr("x", 110)
+      .attr("dy", "13px")
+      .style("font-size", "12px")
+      .style("fill", USRusColors["United States"].lines)
+      .style("font-weight", 700);
 
-    var ruLabel = d3.select("#ruLabel");
-    ruLabel.append("tspan")
+    console.log(USRusData);
+    var ruLabel1 = d3.select("#ruLabel1");
+    ruLabel1.append("tspan")
       .text("Total Avg Daily Visitors of RUS-based sites:");
-    ruLabel.append("tspan")
+    ruLabel1.append("tspan")
       .text(USRusData[1].data.total_vis.toLocaleString('en'))
       .attr("text-anchor", "middle")
-      .attr("x", 430)
+      .attr("x", 425)
+      .attr("dy", "13px")
+      .style("font-size", "10px")
+      .style("fill", USRusColors["Russian Federation"].lines)
+      .style("font-weight", 700);
+
+    var ruLabel2 = d3.select("#ruLabel2");
+    ruLabel2.append("tspan")
+      .text("Number of Countries That Use RUS Sites:");
+    ruLabel2.append("tspan")
+      .text(Object.keys(USRusData[1].data.destination).length)
+      .attr("text-anchor", "middle")
+      .attr("x", 425)
       .attr("dy", "13px")
       .style("font-size", "10px")
       .style("fill", USRusColors["Russian Federation"].lines)
@@ -324,6 +362,7 @@ function showVis1() {
   }
 
 
+  // Asyncrhonously load all the data files and then call callback()
   d3.queue()
   .defer(d3.json, "/map_figure_data_with_coord.json")
   .defer(d3.json, "/world-50m.json")
