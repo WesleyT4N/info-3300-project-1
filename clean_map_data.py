@@ -9,15 +9,6 @@ with open('map_figure_data.csv') as f:
 	visitors_dict_lst = [{key: value for key, value in row.items()} for row in csv.DictReader(f)]
 
 
-
-# def readfile(filename):
-# 	lst = []
-# 	with open (filename) as f:
-# 		for line in f:
-# 			words = line.split()
-# 			lst.append(words)
-# 	return lst
-
 def extract_coordinates(capital_data_input):
 	output_dict = {}
 	geometries_list = capital_data_input["objects"]["countries"]["geometries"]
@@ -86,10 +77,10 @@ def clean_data(visitors_data_input,coordinates_input,country_num=50):
 	sorted_hosting_country_vis = sorted(total_visitors_dict.items(), key=lambda x: -x[1])
 
 	top_countries = sorted_hosting_country_vis[:country_num]
-	top_countries_lst = [i[0] for i in top_countries]
+	top_countries_total_vis = {i[0]:i[1] for i in top_countries}
 
 	# build the dictionary
-	output_dict = {host:{"destination":{},"coordinates":{"latitude":coordinates_input[host]["latitude"],"longitude":coordinates_input[host]["longitude"]}} 
+	output_dict = {host:{"destination":{}, "total_vis":top_countries_total_vis[host],"coordinates":{"latitude":coordinates_input[host]["latitude"],"longitude":coordinates_input[host]["longitude"]}} 
 					for host,num in top_countries}
 
 	for country_pair_dict in visitors_data_input:
@@ -101,7 +92,7 @@ def clean_data(visitors_data_input,coordinates_input,country_num=50):
 		daily_vis = re.sub(r'\s+', '', country_pair_dict["Avg_Daily_Visitors"])
 		daily_vis = int(daily_vis) if daily_vis!="N/A" else 0
 
-		if hosting_country in top_countries_lst:
+		if hosting_country in top_countries_total_vis:
 			destination_country = country_pair_dict["country"]
 			#these are oversea territories/other regions of certain countries, not treated as a country in the topo json data
 			if destination_country == "Gibraltar":
@@ -128,26 +119,25 @@ def clean_data(visitors_data_input,coordinates_input,country_num=50):
 
 
 
-
-
-
-
-
-
 	return output_dict
-
-
-
-
 
 
 
 if __name__ == "__main__":
 	coord = extract_coordinates(capital_coord_data)
 	visitors = clean_data(visitors_dict_lst,coord)
+
 	with open('map_figure_data_with_coord.json','w') as fp:
 		json.dump(visitors,fp)
-	print visitors
+
+
+	#delete
+	# count = 0
+	# us = visitors["United States"]
+	# for des in us["destination"]:
+	# 	print type(des)
+
+	# print count
 
 
 

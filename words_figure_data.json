@@ -1,0 +1,296 @@
+[
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 518108189,
+   "Website": "Google"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 506457282,
+   "Website": "Youtube"
+ },
+ {
+   "Location": "Ireland",
+   "Color": "#009A49",
+   "Avg_Daily_Visitors": 270071255,
+   "Website": "Facebook"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 118921355,
+   "Website": "Wikipedia"
+ },
+ {
+   "Location": "Hong Kong",
+   "Color": "#9370DB",
+   "Avg_Daily_Visitors": 116401260,
+   "Website": "Baidu"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 99572035,
+   "Website": "Yahoo!"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 79499959,
+   "Website": "QQ"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 64764259,
+   "Website": "Twitter"
+ },
+ {
+   "Location": "China",
+   "Color": "#BE132D",
+   "Avg_Daily_Visitors": 63711001,
+   "Website": "Taobao"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 62380477,
+   "Website": "Tmall"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 60614015,
+   "Website": "Reddit"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 58408915,
+   "Website": "Sohu"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 56576433,
+   "Website": "Live"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 48820414,
+   "Website": "Amazon"
+ },
+ {
+   "Location": "Russian Federation",
+   "Color": "#FF4500",
+   "Avg_Daily_Visitors": 48174081,
+   "Website": "VK"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 47854006,
+   "Website": "Instagram"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 46980716,
+   "Website": "Sina"
+ },
+ {
+   "Location": "China",
+   "Color": "#BE132D",
+   "Avg_Daily_Visitors": 39797442,
+   "Website": "360"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 38809044,
+   "Website": "Jd"
+ },
+ {
+   "Location": "China",
+   "Color": "#BE132D",
+   "Avg_Daily_Visitors": 38234165,
+   "Website": "Weibo"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 32886501,
+   "Website": "Netflix"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 31156540,
+   "Website": "LinkedIn"
+ },
+ {
+   "Location": "Russian Federation",
+   "Color": "#FF4500",
+   "Avg_Daily_Visitors": 29110541,
+   "Website": "Yandex"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 26567811,
+   "Website": "Microsoft"
+ },
+ {
+   "Location": "Netherlands",
+   "Color": "#8B4513",
+   "Avg_Daily_Visitors": 25646796,
+   "Website": "OnClick"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 24736274,
+   "Website": "WordPress"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 23056401,
+   "Website": "Twitch"
+ },
+ {
+   "Location": "Netherlands",
+   "Color": "#8B4513",
+   "Avg_Daily_Visitors": 23049255,
+   "Website": "PornHub"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 22975273,
+   "Website": "Imgur"
+ },
+ {
+   "Location": "Hong Kong",
+   "Color": "#9370DB",
+   "Avg_Daily_Visitors": 22966089,
+   "Website": "Hao123"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 22430345,
+   "Website": "Bing"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 22403678,
+   "Website": "MSN"
+ },
+ {
+   "Location": "Russian Federation",
+   "Color": "#FF4500",
+   "Avg_Daily_Visitors": 21572093,
+   "Website": "Ok"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 21528030,
+   "Website": "WhatsApp"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 20898095,
+   "Website": "Blogger"
+ },
+ {
+   "Location": "China",
+   "Color": "#BE132D",
+   "Avg_Daily_Visitors": 20364586,
+   "Website": "AliPay"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 19946361,
+   "Website": "Office"
+ },
+ {
+   "Location": "Russian Federation",
+   "Color": "#FF4500",
+   "Avg_Daily_Visitors": 19840538,
+   "Website": "Mail"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 18620670,
+   "Website": "Microsoft"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 18514058,
+   "Website": "Pinterest"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 18266216,
+   "Website": "Popads"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 18173611,
+   "Website": "StackOverflow"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 17678892,
+   "Website": "Ebay"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 17475782,
+   "Website": "Tumblr"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 16539221,
+   "Website": "IMDb"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 16128136,
+   "Website": "AliExpress"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 15494191,
+   "Website": "Apple"
+ },
+ {
+   "Location": "United States",
+   "Color": "#002868",
+   "Avg_Daily_Visitors": 15422916,
+   "Website": "GitHub"
+ },
+ {
+   "Location": "Netherlands",
+   "Color": "#8B4513",
+   "Avg_Daily_Visitors": 14858061,
+   "Website": "XVideos"
+ }
+]
