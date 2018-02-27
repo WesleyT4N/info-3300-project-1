@@ -4,19 +4,19 @@
 function showVis1() {
   var worldMapSvg = d3.select("#view1Svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
-  .attr("viewBox", "0 0 600 290");
+  .attr("viewBox", "0 0 600 300");
 
   var projection = d3.geoEquirectangular();
   var pathGenerator;
   
   var countries;
   var hostData;
-  var rawCountryData;
   var USRusData;
  
   var visitorExtent;
   var visitorScale;
 
+  // Colors for US and Russia
   var USRusColors = {
     "United States": 
       { 
@@ -36,11 +36,13 @@ function showVis1() {
     "643": "Russian Federation",
   };
 
+  // Render Map
   function showMap() {
-    projection.fitSize([600, 290],
+    projection.fitSize([600, 310],
       countries);
     pathGenerator = d3.geoPath().projection(projection);
     
+    // Build and render paths for all the countries
     var paths = worldMapSvg.selectAll("path.country")
       .data(countries.features);
     paths = paths.enter().append("path")
@@ -56,7 +58,7 @@ function showVis1() {
     }).style("stroke", "#111a25")
     .style("stroke-width", 0.5);
     
-    // console.log(countries);
+
     // display the points for each hosting location
     var circles = worldMapSvg.selectAll("circle.capital")
     .data(hostData);
@@ -77,7 +79,7 @@ function showVis1() {
         var result = USRusData.find(function (e) {
           return e.key === d.key;
         });
-        // console.log(result);
+        // Make the circles for USA and Russia bigger
         if (result) {
           d3.select(this).attr("r", 4).attr("class", "hub-point");
           return "#fff";
@@ -86,6 +88,7 @@ function showVis1() {
       })
       .merge(circles);
     
+    // Draw arrows connecting all the points
     drawArrows();
   }
 
@@ -127,6 +130,7 @@ function showVis1() {
     });
   }
 
+  // Function to draw bottom header
   function drawHeader() {
     worldMapSvg.append("g")
     .attr("id", "mapHeader");
@@ -136,7 +140,7 @@ function showVis1() {
       .append("rect")
       .style("fill", "black")
       .attr("x", 0)
-      .attr("y", 245)
+      .attr("y", 255)
       .attr("width", 600)
       .attr("height", 45)
       .style("opacity", ".75");
@@ -147,90 +151,96 @@ function showVis1() {
       .text("The Online Influence of")
       .attr("text-anchor", "middle")
       .attr("x", 300)
-      .attr("y", 280)
+      .attr("y", 291)
       .style("font-size", "2rem")
       .style("fill", "#fff");
 
-      // Setupt 
+      // Bottom header text
       var headerText = d3.select("#headerText");
       headerText.append("tspan").text(" USA").style("fill", USRusColors["United States"].lines).style("font-weight", 700);
       headerText.append("tspan").text(" vs");
       headerText.append("tspan").text(" Russia").style("fill", USRusColors["Russian Federation"].lines).style("font-weight", 700);
   }
 
+  // Function to draw bottom legend
   function drawLegend() {
     worldMapSvg.append("g").attr("id", "legend");
 
     var legend = d3.select("#legend");
+    // Background
     legend.append("rect")
       .attr("x", 0)
-      .attr("y", 225)
+      .attr("y", 235)
       .attr("width", 600)
       .attr("height", 20)
       .style("fill" ,"black")
       .style("opacity", "0.3");
-
+    
     legend.append("line")
       .attr("x1", 10)
       .attr("x2", 30)
-      .attr("y1", 236)
-      .attr("y2", 236)
+      .attr("y1", 246)
+      .attr("y2", 246)
       .style("stroke", USRusColors["United States"].lines)
       .style("stroke-width", 2);
     legend.append("text")
       .text("Reach of US-hosted sites")
       .attr("x", 35)
-      .attr("y", 238)
+      .attr("y", 248)
       .style("font-size", "6px")
       .style("fill", "#fff");
 
     legend.append("line")
       .attr("x1", 110)
       .attr("x2", 130)
-      .attr("y1", 236)
-      .attr("y2", 236)
+      .attr("y1", 246)
+      .attr("y2", 246)
       .style("stroke", USRusColors["Russian Federation"].lines)
       .style("stroke-width", 2);
     legend.append("text")
       .text("Reach of Russian-hosted sites")
       .attr("x", 135)
-      .attr("y", 238)
+      .attr("y", 248)
+      .style("font-size", "6px")
+      .style("fill", "#fff");
+
+    legend.append("circle")
+      .attr("r", 1)
+      .attr("cx", 225)
+      .attr("cy", 246)
+      .style("fill", "#8abfff");
+    legend.append("text")
+      .text("Capitals of other major web-hosting countries")
+      .attr("x", 230)
+      .attr("y", 248)
       .style("font-size", "6px")
       .style("fill", "#fff");
 
     legend.append("text")
       .text("Line Opacity = # of average daily users of US / RU sites from that country")
       .attr("x", 400)
-      .attr("y", 238)
+      .attr("y", 248)
       .style("font-size", "6px")
       .style("fill", "#fff");
-    legend.append("circle")
-      .attr("r", 1)
-      .attr("cx", 225)
-      .attr("cy", 236)
-      .style("fill", "#8abfff");
-    legend.append("text")
-      .text("Capitals of other major web-hosting countries")
-      .attr("x", 230)
-      .attr("y", 238)
-      .style("font-size", "6px")
-      .style("fill", "#fff");;
+
   }
 
+  // Draw data labels on map
   function drawFeatures() {
     worldMapSvg.append("g").attr("id", "mapFeatures");
 
     var features = d3.select("#mapFeatures");
+    // Backgrounds
     features.append("rect")
       .attr("x", 50)
-      .attr("y", 50)
+      .attr("y", 60)
       .attr("width", 120)
       .attr("height", 25)
       .style("fill", "black")
       .style("opacity", 0.5);
     features.append("rect")
       .attr("x", 370)
-      .attr("y", 15)
+      .attr("y", 25)
       .attr("width", 120)
       .attr("height", 25)
       .style("fill", "black")
@@ -239,18 +249,16 @@ function showVis1() {
     features.append("text")
       .attr("id", "usLabel")
       .attr("x", 55)
-      .attr("y", 58)
+      .attr("y", 68)
       .style("fill", "#fff")
       .style("font-size", "6px");
     features.append("text")
       .attr("id", "ruLabel")
       .attr("x", 375)
-      .attr("y", 23)
+      .attr("y", 33)
       .style("fill", "#fff")
       .style("font-size", "6px");
 
-
-    
     var usLabel = d3.select("#usLabel");
     usLabel.append("tspan")
       .text("Total Avg Daily Visitors of USA-based sites:");
@@ -277,8 +285,8 @@ function showVis1() {
       .style("font-weight", 700);
   }
 
+
   function callback(error, data, topo) {
-    rawCountryData = topo;
     // console.log(topo);
     hostData = data;
     hostData = Object.keys(hostData).map(function(key) {
@@ -304,15 +312,10 @@ function showVis1() {
         return RUDests[k].daily_vis;
       });
 
-    console.log(RUDests);
-    console.log(RUDailyVisitors);
-    console.log(d3.extent(RUDailyVisitors));
     var combinedDailyVisitors = USDailyVisitors.concat(RUDailyVisitors);
-
     visitorExtent = d3.extent(combinedDailyVisitors);
     visitorScale = d3.scaleLog().domain(visitorExtent).range([.1, .5]);
-    console.log(visitorExtent);
-    // console.log(hostData);
+
     countries = topojson.feature(topo, topo.objects.countries);
     showMap();
     drawHeader();
