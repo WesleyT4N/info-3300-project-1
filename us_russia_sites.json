@@ -2,45 +2,65 @@
    "United States": [
       {
          "Website": "Google",
-         "Avg_Daily_Visitors": 518108189
+         "Avg_Daily_Visitors": 518108189,
+         "Color":"#012149",
+         "Y_coord":"60"
       },
       {
          "Website": "Youtube",
-         "Avg_Daily_Visitors": 506457282
+         "Avg_Daily_Visitors": 506457282,
+         "Color":"#013670",
+         "Y_coord":"80"
       },
       {
          "Website": "Wikipedia",
-         "Avg_Daily_Visitors": 118921355
+         "Avg_Daily_Visitors": 118921355,
+         "Color":"#0151a8",
+         "Y_coord":"100"
       },
       {
          "Website": "Yahoo!",
-         "Avg_Daily_Visitors": 99572035
+         "Avg_Daily_Visitors": 99572035,
+         "Color":"#1172db",
+         "Y_coord":"120"
       },
       {
          "Website": "QQ",
-         "Avg_Daily_Visitors": 79499959
+         "Avg_Daily_Visitors": 79499959,
+         "Color":"#5fa0e8",
+         "Y_coord":"140"
       }
    ],
    "Russian Federation": [
       {
          "Website": "VK",
-         "Avg_Daily_Visitors": 48174081
+         "Avg_Daily_Visitors": 48174081,
+         "Color":"#680000",
+         "Y_coord":"60"
       },
       {
          "Website": "Yandex",
-         "Avg_Daily_Visitors": 29110541
+         "Avg_Daily_Visitors": 29110541,
+         "Color":"#a50c0c",
+         "Y_coord":"80"
       },
       {
          "Website": "Ok",
-         "Avg_Daily_Visitors": 21572093
+         "Avg_Daily_Visitors": 21572093,
+         "Color":"#c92020",
+         "Y_coord":"100"
       },
       {
          "Website": "Mail",
-         "Avg_Daily_Visitors": 19840538
+         "Avg_Daily_Visitors": 19840538,
+         "Color":"#d84343",
+         "Y_coord":"120"
       },
       {
          "Website": "Rambler",
-         "Avg_Daily_Visitors": 5082480
+         "Avg_Daily_Visitors": 5082480,
+         "Color":"#e86868",
+         "Y_coord":"140"
       }
    ]
 }

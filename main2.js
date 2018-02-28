@@ -1,5 +1,6 @@
 "use strict";
 
+
 function showVis1() {
   var worldMapSvg = d3.select("#view1Svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
@@ -150,7 +151,7 @@ function showVis1() {
       .text("The Online Influence of")
       .attr("text-anchor", "middle")
       .attr("x", 300)
-      .attr("y", 289)
+      .attr("y", 291)
       .style("font-size", "2rem")
       .style("fill", "#fff");
 
@@ -322,8 +323,88 @@ function showVis1() {
       .style("font-weight", 700);
   }
 
+  function showRings(data) {
+    var wordRingSvg = worldMapSvg.append("g").attr("x",0).attr("y",400);
+    var us_ru_data = data;
+    var us_topsites_data = data["United States"];
+    var ru_topsites_data = data["Russian Federation"];
+    
+    var circleAreaScale = d3.scaleSqrt()
+    .domain([5082480,518108189])
+    .range([20,7000]);
 
-  function callback(error, data, topo) {
+    // var usColorScale = d3.scaleLinear()
+    // .domain([79499959,518108189])
+    // .range(["#eaf4ff","#000226"]);
+
+    // var ruColorScale = d3.scaleLinear()
+    // .domain([5082480, 48174081])
+    // .range(["#FFAFBD","#EB5757"]);
+
+    //draw rings for two countries
+    var us_ring_center_x = 95;
+    var us_ring_center_y = 100;
+    var ru_ring_center_x = 295;
+    var ru_ring_center_y = 100;
+
+
+    for (var country in us_ru_data){
+      if (country == "United States"){
+        var ring_center_x = us_ring_center_x;
+        var ring_center_y = us_ring_center_y;
+        var label_distance = 90;
+      }else{
+        var ring_center_x = ru_ring_center_x;
+        var ring_center_y = ru_ring_center_y;
+        label_distance = 50;
+      }
+      us_ru_data[country].forEach(function (site) {
+        wordRingSvg.append("circle")
+        .attr("cx", ring_center_x)
+        .attr("cy", ring_center_y)
+        .attr("r", Math.sqrt(circleAreaScale(site.Avg_Daily_Visitors)))
+        .style("fill", site.Color);
+
+        wordRingSvg.append("line")
+        .attr("x1",ring_center_x)
+        .attr("y1",ring_center_y)
+        .attr("x2",ring_center_x+label_distance)
+        .attr("y2",site.Y_coord)
+        .style("stroke-width","2px")
+        .style("stroke",site.Color);
+        wordRingSvg.append("line")
+        .attr("x1",ring_center_x+label_distance)
+        .attr("y1",site.Y_coord)
+        .attr("x2",ring_center_x+label_distance+50)
+        .attr("y2",site.Y_coord)
+        .style("stroke-width","2px")
+        .style("stroke",site.Color);
+
+        wordRingSvg.append("text")
+        .text(site.Website+": "+site.Avg_Daily_Visitors.toLocaleString('en'))
+        .attr("x",ring_center_x+label_distance+3)
+        .attr("y",parseInt(site.Y_coord)-5)
+        .style("font-size", "6px")
+        .style("fill", "white");
+      });
+    }
+
+    wordRingSvg.append("rect")
+      .attr("x", 155)
+      .attr("y", 170)
+      .attr("width", 240)
+      .attr("height", 25)
+      .style("fill", "#0c1116");
+    wordRingSvg.append("text")
+      .text("Avg Daily Visitors of Top 5 Sites Hosted by USA/Russia")
+      .attr("x", 160)
+      .attr("y", 178)
+      .attr("alignment-baseline","hanging")
+      .style("font-size", "10px")
+      .style("fill", "white");
+  }
+
+  function callback(error, data, topo, siteData) {
     // console.log(topo);
     hostData = data;
     hostData = Object.keys(hostData).map(function(key) {
@@ -335,6 +416,7 @@ function showVis1() {
       return b.data.total_vis - a.data.total_vis;
     });
     USRusData = [USRusData[0], USRusData[3]];
+    console.log(USRusData);
     
     var USDests = USRusData[0].data.destination;
     var USDailyVisitors = Object.keys(USDests)
@@ -357,6 +439,7 @@ function showVis1() {
     drawHeader();
     drawLegend();
     drawFeatures();
+    showRings(siteData);
   }
 
 
@@ -364,19 +447,12 @@ function showVis1() {
   d3.queue()
   .defer(d3.json, "/map_figure_data_with_coord.json")
   .defer(d3.json, "/world-50m.json")
+  .defer(d3.json, "/us_russia_sites.json")
   .await(callback);
 }
 
 //display ring graph below
 function showVis2() {
-  d3.selection.prototype.moveToBack = function() {  
-    return this.each(function() { 
-        var firstChild = this.parentNode.firstChild; 
-        if (firstChild) { 
-            this.parentNode.insertBefore(this, firstChild); 
-        } 
-    });
-};
 
   var wordRingSvg = d3.select("#view2Svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
@@ -389,12 +465,7 @@ function showVis2() {
     
     var circleAreaScale = d3.scaleSqrt()
     .domain([5082480,518108189])
-    .range([20,700]);
-
-    var circleRingScale = d3.scaleSqrt()
-    .domain([5082480,518108189])
-    .range([0,20]);
-
+    .range([20,7000]);
 
     // var usColorScale = d3.scaleLinear()
     // .domain([79499959,518108189])
@@ -411,45 +482,37 @@ function showVis2() {
     var ru_ring_center_y = 100;
 
 
-    for (var country in us_ru_data) {
-      var ring_center_x, ring_center_y, label_distance;
+    for (var country in us_ru_data){
       if (country == "United States"){
-        ring_center_x = us_ring_center_x;
-        ring_center_y = us_ring_center_y;
-        label_distance = 70;
+        var ring_center_x = us_ring_center_x;
+        var ring_center_y = us_ring_center_y;
+        var label_distance = 90;
       }else{
-        ring_center_x = ru_ring_center_x;
-        ring_center_y = ru_ring_center_y;
-        label_distance = 20;
+        var ring_center_x = ru_ring_center_x;
+        var ring_center_y = ru_ring_center_y;
+        label_distance = 50;
       }
-      var last = 5;
-      var a = us_ru_data[country].reverse();
-      a.forEach(function (site) {
+      us_ru_data[country].forEach(function (site) {
         wordRingSvg.append("circle")
         .attr("cx", ring_center_x)
         .attr("cy", ring_center_y)
-        // Radius based on the thickness of the ring rather than thickness of the circle
-        .attr("r", circleRingScale(site.Avg_Daily_Visitors) + last)
-        // .attr("r", Math.sqrt(circleAreaScale(site.Avg_Daily_Visitors)))
-        .style("fill", site.Color).moveToBack();
-
-        // Next ring will be the radius of the current one + its own ring thickness
-        last += circleRingScale(site.Avg_Daily_Visitors);
+        .attr("r", Math.sqrt(circleAreaScale(site.Avg_Daily_Visitors)))
+        .style("fill", site.Color);
 
         wordRingSvg.append("line")
         .attr("x1",ring_center_x)
         .attr("y1",ring_center_y)
         .attr("x2",ring_center_x+label_distance)
         .attr("y2",site.Y_coord)
-        .style("stroke-width","1px")
-        .style("stroke",site.Color).moveToBack();
+        .style("stroke-width","2px")
+        .style("stroke",site.Color);
         wordRingSvg.append("line")
         .attr("x1",ring_center_x+label_distance)
         .attr("y1",site.Y_coord)
         .attr("x2",ring_center_x+label_distance+50)
         .attr("y2",site.Y_coord)
-        .style("stroke-width","1px")
-        .style("stroke",site.Color).moveToBack();
+        .style("stroke-width","2px")
+        .style("stroke",site.Color);
 
         wordRingSvg.append("text")
         .text(site.Website+": "+site.Avg_Daily_Visitors.toLocaleString('en'))
@@ -457,14 +520,7 @@ function showVis2() {
         .attr("y",parseInt(site.Y_coord)-5)
         .style("font-size", "6px")
         .style("fill", "white");
-
-        wordRingSvg.append("circle")
-        .attr("cx", ring_center_x)
-        .attr("cy", ring_center_y)
-        .attr("r", 5)
-        .style("fill", "#182433");
       });
-
     }
 
     wordRingSvg.append("rect")
@@ -476,7 +532,7 @@ function showVis2() {
     wordRingSvg.append("text")
       .text("Avg Daily Visitors of Top 5 Sites Hosted by USA/Russia")
       .attr("x", 160)
-      .attr("y", 179)
+      .attr("y", 178)
       .attr("alignment-baseline","hanging")
       .style("font-size", "10px")
       .style("fill", "white");
@@ -484,19 +540,20 @@ function showVis2() {
 
 }
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   // Put any code here
 
   // Part 1 Svg
   showVis1();
 
+  showVis2();
 
 
 
   // Part 2 Svg
-  showVis2();
+  var wordCloudSvg = d3.select("#view2Svg")
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 400 200");
 
 
   //Read in words figure csv file.
