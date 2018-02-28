@@ -353,9 +353,9 @@ function showVis1() {
     // .range(["#FFAFBD","#EB5757"]);
 
     //draw rings for two countries
-    var us_ring_center_x = 95;
+    var us_ring_center_x = 100;
     var us_ring_center_y = 190;
-    var ru_ring_center_x = 525;
+    var ru_ring_center_x = 520;
     var ru_ring_center_y = 50;
 
 
@@ -479,7 +479,7 @@ function showVis1() {
     }
 
     wordRingSvg.append("rect")
-    .attr("x", 0)
+    .attr("x", 5)
     .attr("y", 145)
     .attr("width", 132)
     .attr("height", 82)
@@ -487,7 +487,7 @@ function showVis1() {
     .style("opacity", .5).moveToBack();
 
     wordRingSvg.append("rect")
-    .attr("x", 510)
+    .attr("x", 505)
     .attr("y", 6)
     .attr("width", 90)
     .attr("height", 80)
