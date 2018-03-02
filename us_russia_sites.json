@@ -3,13 +3,13 @@
       {
          "Website": "Google",
          "Avg_Daily_Visitors": 518108189,
-         "Color":"#012149",
+         "Color":"#5fa0e8",
          "Y_coord":"60"
       },
       {
          "Website": "Youtube",
          "Avg_Daily_Visitors": 506457282,
-         "Color":"#013670",
+         "Color":"#1172db",
          "Y_coord":"80"
       },
       {
@@ -21,13 +21,13 @@
       {
          "Website": "Yahoo!",
          "Avg_Daily_Visitors": 99572035,
-         "Color":"#1172db",
+         "Color":"#013670",
          "Y_coord":"120"
       },
       {
          "Website": "QQ",
          "Avg_Daily_Visitors": 79499959,
-         "Color":"#5fa0e8",
+         "Color":"#012149",
          "Y_coord":"140"
       }
    ],
@@ -35,13 +35,13 @@
       {
          "Website": "VK",
          "Avg_Daily_Visitors": 48174081,
-         "Color":"#680000",
+         "Color":"#e86868",
          "Y_coord":"60"
       },
       {
          "Website": "Yandex",
          "Avg_Daily_Visitors": 29110541,
-         "Color":"#a50c0c",
+         "Color":"#d84343",
          "Y_coord":"80"
       },
       {
@@ -53,13 +53,13 @@
       {
          "Website": "Mail",
          "Avg_Daily_Visitors": 19840538,
-         "Color":"#d84343",
+         "Color":"#a50c0c",
          "Y_coord":"120"
       },
       {
          "Website": "Rambler",
          "Avg_Daily_Visitors": 5082480,
-         "Color":"#e86868",
+         "Color":"#680000",
          "Y_coord":"140"
       }
    ]
