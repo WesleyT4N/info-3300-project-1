@@ -380,8 +380,8 @@
 
     // Asyncrhonously load all the data files and then call callback()
     d3.queue()
-    .defer(d3.json, "/map_figure_data_with_coord.json")
-    .defer(d3.json, "/world-50m.json")
+    .defer(d3.json, "./map_figure_data_with_coord.json")
+    .defer(d3.json, "./world-50m.json")
     .await(callback);
   }
 
@@ -401,7 +401,7 @@
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", "0 0 400 160");
 
-    d3.json("us_russia_sites.json", function(error,data) {
+    d3.json("./us_russia_sites.json", function(error,data) {
       var us_ru_data = data;
 
       var circleRingScale = d3.scaleLinear()
