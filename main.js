@@ -95,13 +95,11 @@ function showVis1() {
   // https://gist.github.com/vigorousnorth/e95a867b10de1239ab3a
   function drawArrows(){
     USRusData.forEach(function (hostCountry) {
-      // console.log(hostCountry);
       var origin = projection([hostCountry.data.coordinates.longitude,      
         hostCountry.data.coordinates.latitude]);
       var destinations = hostCountry.data.destination;
-      // console.log(arrows);
+
       for (var dest in destinations) {
-        // console.log(destinations[dest]);
           worldMapSvg.append("path")
           .attr("class", "arrow")
           .style("stroke", USRusColors[hostCountry.key].lines)
@@ -116,11 +114,8 @@ function showVis1() {
             var curveoffset = 20,
                 midcurve = [mid[0]+curveoffset, mid[1]-curveoffset];
             return "M" + origin[0] + ',' + origin[1] 
-            // smooth curve to offset midpoint
               + "S" + midcurve[0] + "," + midcurve[1]
-            //smooth curve to destination	
               + "," + point[0] + "," + point[1];
-            // console.log(point);
           });
       }
     });
@@ -319,184 +314,7 @@ function showVis1() {
       .style("font-weight", 700);
   }
 
-  // function drawRings(data) {
-  //   d3.selection.prototype.moveToBack = function() {  
-  //     return this.each(function() { 
-  //         var firstChild = this.parentNode.firstChild; 
-  //         if (firstChild) { 
-  //             this.parentNode.insertBefore(this, firstChild); 
-  //         } 
-  //     });
-  //   };
-
-  //   var wordRingSvg = worldMapSvg.append("g").attr("id","wordRingSvg");
-
-  //   var us_ru_data = data;
-  //   var us_topsites_data = data["United States"];
-  //   var ru_topsites_data = data["Russian Federation"];
-    
-  //   var circleAreaScale = d3.scaleSqrt()
-  //   .domain([5082480,518108189])
-  //   .range([20,700]);
-
-  //   var circleRingScale = d3.scaleSqrt()
-  //   .domain([5082480,518108189])
-  //   .range([0,8]);
-
-
-  //   // var usColorScale = d3.scaleLinear()
-  //   // .domain([79499959,518108189])
-  //   // .range(["#eaf4ff","#000226"]);
-
-  //   // var ruColorScale = d3.scaleLinear()
-  //   // .domain([5082480, 48174081])
-  //   // .range(["#FFAFBD","#EB5757"]);
-
-  //   //draw rings for two countries
-  //   var us_ring_center_x = 100;
-  //   var us_ring_center_y = 190;
-  //   var ru_ring_center_x = 520;
-  //   var ru_ring_center_y = 50;
-
-
-  //   for (var country in us_ru_data) {
-  //     if (us_ru_data.hasOwnProperty(country)) {
-  //       var ring_center_x, ring_center_y, label_distance;
-  //       if (country === "United States"){
-  //         ring_center_x = us_ring_center_x;
-  //         ring_center_y = us_ring_center_y;
-  //         label_distance = -90;
-  //       }else{
-  //         ring_center_x = ru_ring_center_x;
-  //         ring_center_y = ru_ring_center_y;
-  //         label_distance = 20;
-  //       }
-
-  //       var last = 5; // Initial radius of center filler circle (hole of donut)
-
-  //       var rev = us_ru_data[country].reverse();
-  //       rev.forEach(function (site, i) {
-  //         wordRingSvg.append("circle")
-  //         .attr("cx", ring_center_x)
-  //         .attr("cy", ring_center_y)
-  //         // Radius based on the thickness of the ring rather than thickness of the circle
-  //         .attr("r", circleRingScale(site.Avg_Daily_Visitors) + last)
-  //         // .attr("r", Math.sqrt(circleAreaScale(site.Avg_Daily_Visitors)))
-  //         .style("fill", site.Color).moveToBack();
-
-  //         // Next ring will be the radius of the current one + its own ring thickness
-  //         last += circleRingScale(site.Avg_Daily_Visitors);
-
-  //         wordRingSvg.append("line")
-  //         .attr("x1",ring_center_x)
-  //         .attr("y1",ring_center_y)
-  //         .attr("x2", function () {
-  //           return (country === "United States" ? 
-  //           ring_center_x + label_distance + 50
-  //           : ring_center_x + label_distance);
-  //         })
-  //         .attr("y2", function () {
-  //           switch (i) {
-  //             case 0:
-  //               return ring_center_y + 30;
-  //             case 1: 
-  //               return ring_center_y + 15;
-  //             case 2:
-  //               return ring_center_y;
-  //             case 3: 
-  //               return ring_center_y - 15;
-  //             case 4: 
-  //               return ring_center_y - 30;
-  //           }
-  //         })
-  //         // .attr("y2",site.Y_coord)
-  //         .style("stroke-width","1px")
-  //         .style("stroke",site.Color).moveToBack();
-  //         wordRingSvg.append("line")
-  //         .attr("x1",ring_center_x+label_distance)
-  //         .attr("y1", function () {
-  //           switch (i) {
-  //             case 0:
-  //               return ring_center_y + 30;
-  //             case 1: 
-  //               return ring_center_y + 15;
-  //             case 2:
-  //               return ring_center_y;
-  //             case 3: 
-  //               return ring_center_y - 15;
-  //             case 4: 
-  //               return ring_center_y - 30;
-  //           }
-  //         })
-  //         // .attr("y1",site.Y_coord)
-  //         .attr("x2",ring_center_x+label_distance+50)
-  //         .attr("y2", function () {
-  //           switch (i) {
-  //             case 0:
-  //               return ring_center_y + 30;
-  //             case 1: 
-  //               return ring_center_y + 15;
-  //             case 2:
-  //               return ring_center_y;
-  //             case 3: 
-  //               return ring_center_y - 15;
-  //             case 4: 
-  //               return ring_center_y - 30;
-  //           }
-  //         })
-  //         // .attr("y2",site.Y_coord)
-  //         .style("stroke-width","1px")
-  //         .style("stroke",site.Color).moveToBack();
-
-  //         wordRingSvg.append("text")
-  //         .text(site.Website+": "+site.Avg_Daily_Visitors.toLocaleString('en'))
-  //         .attr("x",ring_center_x+label_distance+3)
-  //         .attr("y", function () {
-  //           switch (i) {
-  //             case 0:
-  //               return ring_center_y + 26;
-  //             case 1: 
-  //               return ring_center_y + 11;
-  //             case 2:
-  //               return ring_center_y - 4;
-  //             case 3: 
-  //               return ring_center_y - 19;
-  //             case 4: 
-  //               return ring_center_y - 34;
-  //           }
-  //         })
-  //         // .attr("y",parseInt(site.Y_coord)-5)
-  //         .style("font-size", "5px")
-  //         .style("fill", "white");
-
-  //         wordRingSvg.append("circle")
-  //         .attr("cx", ring_center_x)
-  //         .attr("cy", ring_center_y)
-  //         .attr("r", 5)
-  //         .style("fill", "#182433");
-  //       });
-  //     }
-  //   }
-
-  //   wordRingSvg.append("rect")
-  //   .attr("x", 5)
-  //   .attr("y", 145)
-  //   .attr("width", 132)
-  //   .attr("height", 82)
-  //   .style("fill", "black")
-  //   .style("opacity", .5).moveToBack();
-
-  //   wordRingSvg.append("rect")
-  //   .attr("x", 505)
-  //   .attr("y", 6)
-  //   .attr("width", 90)
-  //   .attr("height", 80)
-  //   .style("fill", "black")
-  //   .style("opacity", .5).moveToBack();
-  // }
-
   function callback(error, data, topo) {
-    // console.log(topo);
     hostData = data;
     hostData = Object.keys(hostData).map(function(key) {
       return { key, data : hostData[key]};
@@ -556,32 +374,16 @@ function showVis2() {
 
   d3.json("us_russia_sites.json", function(error,data) {
     var us_ru_data = data;
-    var us_topsites_data = data["United States"];
-    var ru_topsites_data = data["Russian Federation"];
-    
-    var circleAreaScale = d3.scaleSqrt()
-    .domain([5082480,518108189])
-    .range([20,700]);
 
     var circleRingScale = d3.scaleLinear()
     .domain([5082480,518108189])
     .range([1,20]);
-
-
-    // var usColorScale = d3.scaleLinear()
-    // .domain([79499959,518108189])
-    // .range(["#eaf4ff","#000226"]);
-
-    // var ruColorScale = d3.scaleLinear()
-    // .domain([5082480, 48174081])
-    // .range(["#FFAFBD","#EB5757"]);
 
     //draw rings for two countries
     var us_ring_center_x = 150;
     var us_ring_center_y = 65;
     var ru_ring_center_x = 266;
     var ru_ring_center_y = 65;
-
 
     for (var country in us_ru_data) {
       if (us_ru_data.hasOwnProperty(country)) {
@@ -603,9 +405,8 @@ function showVis2() {
           wordRingSvg.append("circle")
           .attr("cx", ring_center_x)
           .attr("cy", ring_center_y)
-          // Radius based on the thickness of the ring rather than thickness of the circle
+          // Comparisons based on the thickness of the ring rather than thickness of the circle
           .attr("r", circleRingScale(site.Avg_Daily_Visitors) + last)
-          // .attr("r", Math.sqrt(circleAreaScale(site.Avg_Daily_Visitors)))
           .style("fill", site.Color).moveToBack();
 
           // Next ring will be the radius of the current one + its own ring thickness
@@ -652,7 +453,6 @@ function showVis2() {
                 return ring_center_y - 30;
             }
           })
-          // .attr("y1",site.Y_coord)
           .attr("x2",ring_center_x+label_distance+50)
           .attr("y2", function () {
             switch (i) {
@@ -668,7 +468,6 @@ function showVis2() {
                 return ring_center_y - 30;
             }
           })
-          // .attr("y2",site.Y_coord)
           .style("stroke-width","1px")
           .style("stroke",site.Color).moveToBack();
 
@@ -689,7 +488,6 @@ function showVis2() {
                 return ring_center_y - 34;
             }
           })
-          // .attr("y",parseInt(site.Y_coord)-5)
           .style("font-size", "5px")
           .style("fill", "white");
 
@@ -727,22 +525,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Part 1 Svg
   showVis1();
 
-
-
-
   // Part 2 Svg
   showVis2();
-
-
-  //Read in words figure csv file.
-  //http://learnjsdata.com/read_data.html
-  // d3.csv("/words_figure_data.csv", function(data) {
-  //   data.forEach(function(d) {
-  //     d.Avg_Daily_Visitors = +d.Avg_Daily_Visitors; //read this value as number, not string
-  //   });
-  //   // console.log(data);
-  //   return data;
-  // });
 
 
 });
